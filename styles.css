@@ -3,6 +3,16 @@ body {
   color: white;
 }
 
+
+div.stat_wrapper:not(:first-of-type) {
+  margin-top: 1rem;
+}
+
+span.description {
+  display: inline-block;
+  width: 15rem;
+}
+
 #figure {
   min-height: 600px;
 }
@@ -44,5 +54,15 @@ body {
   body {
     margin-left: 10%;
     margin-right: 10%;
+  }
+}
+
+@media (max-width: 800px) {
+  span.description {
+    display: block;
+  }
+
+  span.value {
+    margin-left: 1rem;
   }
 }
