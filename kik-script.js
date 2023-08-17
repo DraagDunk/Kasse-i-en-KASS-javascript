@@ -90,6 +90,27 @@ function kassPlot(times, amount, startTime, element_id) {
 
 }
 
+
+function insertData(durations) {
+  const sum = durations.reduce((a, b) => a + b, 0);
+  const num = durations.length;
+  const mean = sum / num;
+  const min = Math.min(...durations);
+  const max = Math.max(...durations);
+
+  sum_el = document.getElementById("sum");
+  num_el = document.getElementById("num");
+  mean_el = document.getElementById("mean");
+  min_el = document.getElementById("min");
+  max_el = document.getElementById("max");
+
+  sum_el.textContent = humanizeDuration(sum * 1000, { "language": "da", "units": ["h", "m", "s"], "round": true });
+  num_el.textContent = num;
+  mean_el.textContent = humanizeDuration(mean * 1000, { "language": "da", "units": ["h", "m", "s"], "round": true });
+  min_el.textContent = humanizeDuration(min * 1000, { "language": "da", "units": ["h", "m", "s"], "maxDecimalPoints": 2 });
+  max_el.textContent = humanizeDuration(max * 1000, { "language": "da", "units": ["h", "m", "s"], "maxDecimalPoints": 2 });
+}
+
 async function main(id) {
   const data = await getData(id);
 
@@ -104,6 +125,8 @@ async function main(id) {
   const amount = [...Array(durations.length + 1).keys()].slice(1);
 
   kassPlot(times, amount, startTime, "figure");
+
+  insertData(durations);
 
   const indicator = document.getElementById("indicator");
 

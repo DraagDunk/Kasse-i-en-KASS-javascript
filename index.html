@@ -5,12 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.plot.ly/plotly-2.25.2.min.js" charset="utf-8"></script>
+  <script src="humanize-duration.js"></script>
   <title>Kasse i en KASS</title>
 </head>
 <body>
   <h1>En kasse i en KA$$</h1>
   <div id="figure"></div>
   <div id="indicator" class="loading">ØL</div>
+
+  <div class="statistics">
+    <div class="stat_wrapper">
+      <span class="description">Øl drukket i alt:</span><span class="value" id="num">Indlæser ...</span>
+    </div>
+    <div class="stat_wrapper">
+      <span class="description">Tid brugt i alt:</span><span class="value" id="sum">Indlæser ...</span>
+    </div>
+    <div class="stat_wrapper">
+      <span class="description">Gennemsnitlig tid per øl:</span><span class="value" id="mean">Indlæser ...</span>
+    </div>
+    <div class="stat_wrapper">
+      <span class="description">Hurtigste tid:</span><span class="value" id="min">Indlæser ...</span>
+    </div>
+    <div class="stat_wrapper">
+      <span class="description">Langsomste tid:</span><span class="value" id="max">Indlæser ...</span>
+    </div>
+  </div>
 
   
   <h2>Hvad er det?</h2>
