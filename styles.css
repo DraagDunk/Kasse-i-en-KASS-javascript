@@ -1,3 +1,37 @@
-#tester {
-  background-color: red;
+body {
+  background-color: black;
+  color: white;
+}
+
+#indicator {
+  position: fixed;
+  width: 100px;
+  height: 100px;
+  background-color: green;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: yellow;
+  font-size: 50px;
+
+
+  left: calc(50vw - 50px);
+  top: calc(50vh - 50px);
+  animation: rotation 2s infinite linear;
+
+}
+
+#indicator.loading {
+  display: flex;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
 }

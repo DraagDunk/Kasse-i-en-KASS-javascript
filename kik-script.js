@@ -43,13 +43,14 @@ function kassPlot(times, amount, startTime, element_id) {
 
   const currentTime = new Date()
 
-  const endTime = startTime + (1000 * 3600 * 30);
+  const endTime = startTime + (1000 * 3600 * 26);
 
   Plotly.newPlot(element, [{
     x: times,
     y: amount,
     mode: "markers",
-    type: "scatter"
+    type: "scatter",
+    name: "Øl drukket",
   }, {
     x: [currentTime, currentTime],
     y: [-1, 32],
@@ -58,9 +59,9 @@ function kassPlot(times, amount, startTime, element_id) {
       color: "rgb(0,0,0)",
       width: 1,
       dash: "dash"
-    }
+    },
+    name: "Nu"
   }], {
-    title: { text: "En kasse i en KA$$" },
     font: { color: "#fff" },
     paper_bgcolor: "#000",
     xaxis: {
@@ -76,8 +77,16 @@ function kassPlot(times, amount, startTime, element_id) {
       }
     },
     showlegend: false,
+    margin: {
+      l: 30,
+      r: 0,
+      t: 0,
+    }
 
-  })
+  },
+    {
+      responsive: true,
+    })
 
 }
 
@@ -94,7 +103,11 @@ async function main(id) {
 
   const amount = [...Array(durations.length + 1).keys()].slice(1);
 
-  kassPlot(times, amount, startTime, "tester");
+  kassPlot(times, amount, startTime, "figure");
+
+  const indicator = document.getElementById("indicator");
+
+  indicator.classList.remove("loading")
 
 }
 
