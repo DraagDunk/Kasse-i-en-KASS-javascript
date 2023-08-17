@@ -64,11 +64,18 @@ function kassPlot(times, amount, startTime, element_id) {
     font: { color: "#fff" },
     paper_bgcolor: "#000",
     xaxis: {
-      range: [startTime, endTime]
+      range: [startTime, endTime],
+      title: {
+        text: "Tidspunkt"
+      }
     },
     yaxis: {
-      range: [0, 31]
-    }
+      range: [0, 31],
+      title: {
+        text: "Antal øl drukket"
+      }
+    },
+    showlegend: false,
 
   })
 
