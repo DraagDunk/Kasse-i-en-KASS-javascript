@@ -35,3 +35,10 @@ body {
     transform: rotate(359deg);
   }
 }
+
+@media (min-width: 800px) {
+  body {
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+}
