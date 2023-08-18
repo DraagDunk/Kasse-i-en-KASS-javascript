@@ -90,7 +90,6 @@ function kassPlot(times, amount, startTime, element_id) {
 
 }
 
-
 function insertData(durations, startTime) {
   const sum = durations.reduce((a, b) => a + b, 0);
   const num = durations.length;
@@ -99,6 +98,7 @@ function insertData(durations, startTime) {
   const max = Math.max(...durations);
   const totTime = Date.now() - startTime;
   const curTime = Date.now() - (startTime + sum * 1000)
+  const finTime = new Date(startTime + mean * 30 * 1000);
 
   sumEl = document.getElementById("sum");
   numEl = document.getElementById("num");
@@ -107,14 +107,16 @@ function insertData(durations, startTime) {
   maxEl = document.getElementById("max");
   totEl = document.getElementById("total_time");
   curEl = document.getElementById("current_time");
+  finEl = document.getElementById("finish");
 
   sumEl.textContent = humanizeDuration(sum * 1000, { "language": "da", "units": ["h", "m", "s"], "round": true });
   numEl.textContent = num;
   meanEl.textContent = humanizeDuration(mean * 1000, { "language": "da", "units": ["h", "m", "s"], "round": true });
   minEl.textContent = humanizeDuration(min * 1000, { "language": "da", "units": ["h", "m", "s"], "maxDecimalPoints": 2 });
   maxEl.textContent = humanizeDuration(max * 1000, { "language": "da", "units": ["h", "m", "s"], "maxDecimalPoints": 2 });
-  totEl.textContent = humanizeDuration(new Date(totTime), { "language": "da", "units": ["h", "m"], "round": true });
-  curEl.textContent = humanizeDuration(new Date(curTime), { "language": "da", "units": ["h", "m"], "round": true });
+  totEl.textContent = humanizeDuration(totTime, { "language": "da", "units": ["h", "m"], "round": true });
+  curEl.textContent = humanizeDuration(curTime, { "language": "da", "units": ["h", "m"], "round": true });
+  finEl.textContent = finTime.toLocaleString("da", { "timeStyle": "short", "dateStyle": "long" })
 }
 
 async function main(id) {
