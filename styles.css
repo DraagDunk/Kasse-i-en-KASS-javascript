@@ -13,6 +13,11 @@ span.description {
   width: 15rem;
 }
 
+div.notice {
+  margin-top: 2rem;
+  text-align: center;
+}
+
 #figure {
   min-height: 600px;
 }

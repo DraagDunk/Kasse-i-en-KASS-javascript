@@ -91,27 +91,34 @@ function kassPlot(times, amount, startTime, element_id) {
 }
 
 
-function insertData(durations) {
+function insertData(durations, startTime) {
   const sum = durations.reduce((a, b) => a + b, 0);
   const num = durations.length;
   const mean = sum / num;
   const min = Math.min(...durations);
   const max = Math.max(...durations);
+  const totTime = Date.now() - startTime;
+  const curTime = Date.now() - (startTime + sum * 1000)
 
-  sum_el = document.getElementById("sum");
-  num_el = document.getElementById("num");
-  mean_el = document.getElementById("mean");
-  min_el = document.getElementById("min");
-  max_el = document.getElementById("max");
+  sumEl = document.getElementById("sum");
+  numEl = document.getElementById("num");
+  meanEl = document.getElementById("mean");
+  minEl = document.getElementById("min");
+  maxEl = document.getElementById("max");
+  totEl = document.getElementById("total_time");
+  curEl = document.getElementById("current_time");
 
-  sum_el.textContent = humanizeDuration(sum * 1000, { "language": "da", "units": ["h", "m", "s"], "round": true });
-  num_el.textContent = num;
-  mean_el.textContent = humanizeDuration(mean * 1000, { "language": "da", "units": ["h", "m", "s"], "round": true });
-  min_el.textContent = humanizeDuration(min * 1000, { "language": "da", "units": ["h", "m", "s"], "maxDecimalPoints": 2 });
-  max_el.textContent = humanizeDuration(max * 1000, { "language": "da", "units": ["h", "m", "s"], "maxDecimalPoints": 2 });
+  sumEl.textContent = humanizeDuration(sum * 1000, { "language": "da", "units": ["h", "m", "s"], "round": true });
+  numEl.textContent = num;
+  meanEl.textContent = humanizeDuration(mean * 1000, { "language": "da", "units": ["h", "m", "s"], "round": true });
+  minEl.textContent = humanizeDuration(min * 1000, { "language": "da", "units": ["h", "m", "s"], "maxDecimalPoints": 2 });
+  maxEl.textContent = humanizeDuration(max * 1000, { "language": "da", "units": ["h", "m", "s"], "maxDecimalPoints": 2 });
+  totEl.textContent = humanizeDuration(new Date(totTime), { "language": "da", "units": ["h", "m"], "round": true });
+  curEl.textContent = humanizeDuration(new Date(curTime), { "language": "da", "units": ["h", "m"], "round": true });
 }
 
-async function main(id) {
+async function main(id, first) {
+
   const data = await getData(id);
 
   const startTime = Date.parse(data.start_time);
@@ -126,12 +133,14 @@ async function main(id) {
 
   kassPlot(times, amount, startTime, "figure");
 
-  insertData(durations);
+  insertData(durations, startTime);
 
   const indicator = document.getElementById("indicator");
 
   indicator.classList.remove("loading")
 
+  setTimeout(main(id, false), 600000);
+
 }
 
-main(2418)
+main(2418, true)
