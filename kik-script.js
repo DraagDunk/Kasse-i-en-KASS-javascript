@@ -119,6 +119,8 @@ function insertData(durations, startTime) {
 
 async function main(id) {
 
+  console.log("Fetching data ...")
+
   const data = await getData(id);
 
   const startTime = Date.parse(data.start_time);
@@ -139,7 +141,7 @@ async function main(id) {
 
   indicator.classList.remove("loading")
 
-  setTimeout(() => main(id), 600000);
+  setTimeout(() => main(id), 60000);
 
 }
 
