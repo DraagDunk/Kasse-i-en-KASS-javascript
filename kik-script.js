@@ -117,7 +117,7 @@ function insertData(durations, startTime) {
   curEl.textContent = humanizeDuration(new Date(curTime), { "language": "da", "units": ["h", "m"], "round": true });
 }
 
-async function main(id, first) {
+async function main(id) {
 
   const data = await getData(id);
 
@@ -139,8 +139,8 @@ async function main(id, first) {
 
   indicator.classList.remove("loading")
 
-  setTimeout(main(id, false), 600000);
+  setTimeout(() => main(id), 600000);
 
 }
 
-main(2418, true)
+main(2418)
