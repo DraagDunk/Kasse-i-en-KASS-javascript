@@ -38,12 +38,18 @@ function convertToTime(timeseries) {
   return times;
 }
 
-function kassPlot(times, amount, startTime, element_id) {
+function kassPlot(times, amount, startTime, element_id, finished) {
   let element = document.getElementById(element_id);
 
-  const currentTime = new Date()
+  const currentTime = Date.now();
 
-  const endTime = startTime + (1000 * 3600 * 26);
+  let endTime = 0;
+
+  if (finished) {
+    endTime = Date.parse(times[times.length - 1]) + (3600 * 1000);
+  } else {
+    endTime = startTime + (1000 * 3600 * 24);
+  }
 
   Plotly.newPlot(element, [{
     x: times,
@@ -90,7 +96,7 @@ function kassPlot(times, amount, startTime, element_id) {
 
 }
 
-function insertData(durations, startTime) {
+function insertData(durations, startTime, finished) {
   const sum = durations.reduce((a, b) => a + b, 0);
   const num = durations.length;
   const mean = sum / num;
@@ -116,18 +122,35 @@ function insertData(durations, startTime) {
   maxEl.textContent = humanizeDuration(max * 1000, { "language": "da", "units": ["h", "m", "s"], "maxDecimalPoints": 2 });
   totEl.textContent = humanizeDuration(totTime, { "language": "da", "units": ["h", "m"], "round": true });
   curEl.textContent = humanizeDuration(curTime, { "language": "da", "units": ["h", "m"], "round": true });
-  finEl.textContent = finTime.toLocaleString("da", { "timeStyle": "short", "dateStyle": "long" })
+  finEl.textContent = finTime.toLocaleString("da", { "timeStyle": "short", "dateStyle": "long" });
+
+  body = document.querySelector("body");
+  body.classList.add("finished");
 }
 
-async function main(id) {
+function isFinished(result, startTime, durations) {
+  if (result !== "" || Date.now() - startTime > 30 * 3600 || durations.length >= 30) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+async function main() {
+
+  const kass_select = document.getElementById("kass_select");
+
+  const kass_id = parseInt(kass_select.value);
 
   console.log("Fetching data ...")
 
-  const data = await getData(id);
+  const data = await getData(kass_id);
 
   const startTime = Date.parse(data.start_time);
 
   const durations = data.durations;
+
+  const finished = isFinished(data.result, startTime, durations);
 
   const accumulatedDurations = accumulateDurations(durations, startTime);
 
@@ -135,16 +158,28 @@ async function main(id) {
 
   const amount = [...Array(durations.length + 1).keys()].slice(1);
 
-  kassPlot(times, amount, startTime, "figure");
+  kassPlot(times, amount, startTime, "figure", finished);
 
-  insertData(durations, startTime);
+  insertData(durations, startTime, finished);
 
   const indicator = document.getElementById("indicator");
 
   indicator.classList.remove("loading")
 
-  setTimeout(() => main(id), 60000);
+  if (!finished) {
+    setTimeout(() => main(id), 60000);
+  }
 
 }
 
-main(2418)
+document.addEventListener("DOMContentLoaded", () => {
+
+  const kass_select = document.getElementById("kass_select");
+
+  main();
+
+  kass_select.addEventListener("change", () => {
+    main();
+  })
+});
+

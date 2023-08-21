@@ -3,6 +3,13 @@ body {
   color: white;
 }
 
+body:not(.finished) .finished {
+  display: none
+}
+
+body.finished .ongoing {
+  display: none;
+}
 
 div.stat_wrapper:not(:first-of-type) {
   margin-top: 1rem;

@@ -29,19 +29,35 @@
     <div class="stat_wrapper">
       <span class="description">Langsomste tid:</span><span class="value" id="max">Indlæser ...</span>
     </div>
-    <div class="stat_wrapper">
+    <div class="stat_wrapper ongoing">
       <span class="description">Tid siden start:</span><span class="value" id="total_time">Indlæser ...</span>
     </div>
-    <div class="stat_wrapper">
+    <div class="stat_wrapper ongoing">
       <span class="description">Tid siden sidste øl:</span><span class="value" id="current_time">Indlæser ...</span>
     </div>
-    <div class="stat_wrapper">
+    <div class="stat_wrapper ongoing">
       <span class="description">Forventet sluttid:</span><span class="value" id="finish">Indlæser ...</span>
     </div>
   </div>
 
-  <div class="notice">
+  <div class="notice ongoing">
     Bemærk: Data opdateres automatisk hvert minut.
+  </div>
+  <div class="notice finished">
+    Bemærk: <span class="kass_name">KA$$</span> er færdig med at drikke for denne gang.
+  </div>
+
+  <div class="notice">
+    <label for="kass_select">Se data for</label>
+    <select name="kass_select" id="kass_select">
+      <option value="2418" selected>KA$$ 22/23</option>
+      <option value="1849">KA$$ 20/21</option>
+      <option value="1627">KA$$ 19/20</option>
+      <option value="1404">KA$$ 18/19</option>
+      <option value="1171">KA$$ 17/18</option>
+      <option value="798">KA$$ 16/17</option>
+      <option value="335">KA$$ 15/16</option>
+    </select>
   </div>
   
   <h2>Hvad er det?</h2>
