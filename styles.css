@@ -11,6 +11,14 @@ body.finished .ongoing {
   display: none;
 }
 
+a {
+  color: red;
+}
+
+a:visited {
+  color: brown;
+}
+
 div.stat_wrapper:not(:first-of-type) {
   margin-top: 1rem;
 }
