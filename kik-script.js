@@ -124,12 +124,18 @@ function insertData(durations, startTime, finished) {
   curEl.textContent = humanizeDuration(curTime, { "language": "da", "units": ["h", "m"], "round": true });
   finEl.textContent = finTime.toLocaleString("da", { "timeStyle": "short", "dateStyle": "long" });
 
-  body = document.querySelector("body");
-  body.classList.add("finished");
+  if (finished) {
+    body = document.querySelector("body");
+    body.classList.add("finished");
+  } else {
+    body = document.querySelector("body");
+    body.classList.remove("finished");
+  }
+  
 }
 
 function isFinished(result, startTime, durations) {
-  if (result !== "" || Date.now() - startTime > 30 * 3600 || durations.length >= 30) {
+  if (result !== "" || Date.now() - startTime > 30 * 3600 * 1000 || durations.length >= 30) {
     return true;
   } else {
     return false;
@@ -167,7 +173,7 @@ async function main() {
   indicator.classList.remove("loading")
 
   if (!finished) {
-    setTimeout(() => main(id), 60000);
+    setTimeout(() => main(), 60000);
   }
 
 }
